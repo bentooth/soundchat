@@ -1,0 +1,1 @@
+{"version":3,"sources":["scripts/index.js"],"names":["console","log"],"mappings":"AAAAA,OAAO,CAACC,GAAR,CAAY,IAAZ","file":"scripts.bcf3243b.js","sourceRoot":"../src","sourcesContent":["console.log('hi');\n"]}
