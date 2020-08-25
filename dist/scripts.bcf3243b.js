@@ -4157,7 +4157,7 @@ exports.initializeSigninButtons = initializeSigninButtons;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.signOut = exports.facebookSignin = exports.googleSignin = void 0;
+exports.signOut = exports.twitterSignin = exports.facebookSignin = exports.googleSignin = void 0;
 
 var _app = _interopRequireDefault(require("firebase/app"));
 
@@ -4189,6 +4189,18 @@ var facebookSignin = function facebookSignin() {
 
 exports.facebookSignin = facebookSignin;
 
+var twitterSignin = function twitterSignin() {
+  var provider = new _app.default.auth.TwitterAuthProvider();
+
+  _app.default.auth().signInWithPopup(provider).then(function (result) {
+    return console.log('successfully logged in ', result.user.displayName);
+  }).catch(function (error) {
+    return console.error('There was an error when signing in with Twitter: ', error);
+  });
+};
+
+exports.twitterSignin = twitterSignin;
+
 var signOut = function signOut() {
   _app.default.auth().signOut().then(function () {
     return console.log('User successfully signed out');
@@ -4210,6 +4222,7 @@ var _firebaseAuthentication = require("../firebase/firebaseAuthentication");
 (0, _utilities.initializeSigninButtons)();
 (0, _utilities.assignClick)('signin-google', _firebaseAuthentication.googleSignin);
 (0, _utilities.assignClick)('signin-facebook', _firebaseAuthentication.facebookSignin);
+(0, _utilities.assignClick)('signin-twitter', _firebaseAuthentication.twitterSignin);
 (0, _utilities.assignClick)('appbar-signout-button', _firebaseAuthentication.signOut);
 },{"../firebase/firebaseConfiguration":"firebase/firebaseConfiguration.js","./utilities.js":"scripts/utilities.js","../firebase/firebaseAuthentication":"firebase/firebaseAuthentication.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -4239,7 +4252,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55130" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55439" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

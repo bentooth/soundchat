@@ -30,6 +30,19 @@ export const facebookSignin = () => {
     );
 };
 
+export const twitterSignin = () => {
+  const provider = new firebase.auth.TwitterAuthProvider();
+  firebase
+    .auth()
+    .signInWithPopup(provider)
+    .then((result) =>
+      console.log('successfully logged in ', result.user.displayName),
+    )
+    .catch((error) =>
+      console.error('There was an error when signing in with Twitter: ', error),
+    );
+};
+
 export const signOut = () => {
   firebase
     .auth()
