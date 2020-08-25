@@ -4157,7 +4157,7 @@ exports.initializeSigninButtons = initializeSigninButtons;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.signOut = exports.twitterSignin = exports.facebookSignin = exports.googleSignin = void 0;
+exports.createEmailSigninAccount = exports.emailSignin = exports.signOut = exports.twitterSignin = exports.facebookSignin = exports.googleSignin = void 0;
 
 var _app = _interopRequireDefault(require("firebase/app"));
 
@@ -4210,6 +4210,26 @@ var signOut = function signOut() {
 };
 
 exports.signOut = signOut;
+
+var emailSignin = function emailSignin(email, password) {
+  _app.default.auth().signInWithEmailAndPassword(email, password).then(function () {
+    return console.log('User successfully signed in with email and password.');
+  }).catch(function (error) {
+    return console.error('There was an error while signing in with email and password: ', error);
+  });
+};
+
+exports.emailSignin = emailSignin;
+
+var createEmailSigninAccount = function createEmailSigninAccount(email, password) {
+  _app.default.auth().createUserWithEmailAndPassword(email, password).then(function () {
+    return console.log('User successfully created an account with email and password');
+  }).catch(function (error) {
+    return console.error('There was an error while creating a new user with email and password: ', error);
+  });
+};
+
+exports.createEmailSigninAccount = createEmailSigninAccount;
 },{"firebase/app":"../node_modules/firebase/app/dist/index.cjs.js","firebase/auth":"../node_modules/firebase/auth/dist/index.esm.js"}],"scripts/index.js":[function(require,module,exports) {
 "use strict";
 
@@ -4224,6 +4244,27 @@ var _firebaseAuthentication = require("../firebase/firebaseAuthentication");
 (0, _utilities.assignClick)('signin-facebook', _firebaseAuthentication.facebookSignin);
 (0, _utilities.assignClick)('signin-twitter', _firebaseAuthentication.twitterSignin);
 (0, _utilities.assignClick)('appbar-signout-button', _firebaseAuthentication.signOut);
+var emailSigninForm = document.getElementById('email-signin-form');
+
+if (emailSigninForm) {
+  emailSigninForm.onsubmit = function (event) {
+    event.preventDefault();
+    var email = event.target['email-input'].value;
+    var password = event.target['password-input'].value;
+    (0, _firebaseAuthentication.emailSignin)(email, password);
+  };
+}
+
+var createEmailSigninForm = document.getElementById('create-email-signin');
+
+if (createEmailSigninForm) {
+  createEmailSigninForm.onsubmit = function (event) {
+    event.preventDefault();
+    var email = event.target['email-input'].value;
+    var password = event.target['password-input'].value;
+    (0, _firebaseAuthentication.createEmailSigninAccount)(email, password);
+  };
+}
 },{"../firebase/firebaseConfiguration":"firebase/firebaseConfiguration.js","./utilities.js":"scripts/utilities.js","../firebase/firebaseAuthentication":"firebase/firebaseAuthentication.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -4252,7 +4293,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55439" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55551" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -8,6 +8,10 @@ body {
 .center-layout {
   max-width: 800px;
   margin: auto;
+}
+
+.center-layout,
+form {
   display: flex;
   flex-direction: column;
 }
@@ -33,6 +37,14 @@ button {
 
 button:hover {
   border: solid black 1px;
+}
+
+input[type='text'],
+input[type='password'] {
+  border: solid 1px black;
+  padding: 20px;
+  margin: 10px 0;
+  font-size: 16px;
 }
 
 /* Header Styles */
