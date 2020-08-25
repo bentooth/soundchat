@@ -21,6 +21,20 @@ a:hover {
   text-decoration: underline;
 }
 
+button {
+  border: solid transparent 1px;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 20px;
+  margin: 10px 0;
+  background-color: #eae8e8;
+  font-size: 14px;
+}
+
+button:hover {
+  border: solid black 1px;
+}
+
 /* Header Styles */
 
 header {
@@ -44,9 +58,21 @@ header a {
   font-size: 18px;
 }
 
+#appbar-sigin-button,
+#appbar-signout-button,
+#appbar-addtune-button,
+#appbar-mysong-link {
+  display: none;
+}
+
 /* Intro Page */
 
 img {
   width: 500px;
   align-self: center;
+}
+
+#signin-google {
+  background-color: rgb(219, 68, 55);
+  color: white;
 }
