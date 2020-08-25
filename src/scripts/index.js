@@ -7,9 +7,11 @@ import {
   twitterSignin,
   emailSignin,
   createEmailSigninAccount,
+  anonymousSignin,
 } from '../firebase/firebaseAuthentication';
 
 initializeSigninButtons();
+anonymousSignin();
 
 assignClick('signin-google', googleSignin);
 assignClick('signin-facebook', facebookSignin);

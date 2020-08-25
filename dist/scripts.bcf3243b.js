@@ -4135,7 +4135,7 @@ var initializeSigninButtons = function initializeSigninButtons() {
 
   if (signInButton && signOutButton && addTuneButton && mySongsLink) {
     _app.default.auth().onAuthStateChanged(function (user) {
-      if (user) {
+      if (user && !user.isAnonymous) {
         signInButton.style.display = 'none';
         signOutButton.style.display = 'inline-block';
         addTuneButton.style.display = 'inline-block';
@@ -4157,7 +4157,7 @@ exports.initializeSigninButtons = initializeSigninButtons;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.createEmailSigninAccount = exports.emailSignin = exports.signOut = exports.twitterSignin = exports.facebookSignin = exports.googleSignin = void 0;
+exports.anonymousSignin = exports.createEmailSigninAccount = exports.emailSignin = exports.signOut = exports.twitterSignin = exports.facebookSignin = exports.googleSignin = void 0;
 
 var _app = _interopRequireDefault(require("firebase/app"));
 
@@ -4230,6 +4230,20 @@ var createEmailSigninAccount = function createEmailSigninAccount(email, password
 };
 
 exports.createEmailSigninAccount = createEmailSigninAccount;
+
+var anonymousSignin = function anonymousSignin() {
+  _app.default.auth().onAuthStateChanged(function (user) {
+    if (!user) {
+      _app.default.auth().signInAnonymously().then(function () {
+        return console.log('User successfully signed in anonymously');
+      }).catch(function (error) {
+        return console.error('There was an error while signing in anonymously: ', error);
+      });
+    }
+  });
+};
+
+exports.anonymousSignin = anonymousSignin;
 },{"firebase/app":"../node_modules/firebase/app/dist/index.cjs.js","firebase/auth":"../node_modules/firebase/auth/dist/index.esm.js"}],"scripts/index.js":[function(require,module,exports) {
 "use strict";
 
@@ -4240,6 +4254,7 @@ var _utilities = require("./utilities.js");
 var _firebaseAuthentication = require("../firebase/firebaseAuthentication");
 
 (0, _utilities.initializeSigninButtons)();
+(0, _firebaseAuthentication.anonymousSignin)();
 (0, _utilities.assignClick)('signin-google', _firebaseAuthentication.googleSignin);
 (0, _utilities.assignClick)('signin-facebook', _firebaseAuthentication.facebookSignin);
 (0, _utilities.assignClick)('signin-twitter', _firebaseAuthentication.twitterSignin);
@@ -4293,7 +4308,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55551" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49392" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

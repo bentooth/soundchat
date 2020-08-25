@@ -6,12 +6,8 @@ export const googleSignin = () => {
   firebase
     .auth()
     .signInWithPopup(provider)
-    .then((result) =>
-      console.log('successfully logged in ', result.user.displayName),
-    )
-    .catch((error) =>
-      console.error('There was an error when signing in with Google: ', error),
-    );
+    .then((result) => console.log('successfully logged in ', result.user.displayName))
+    .catch((error) => console.error('There was an error when signing in with Google: ', error));
 };
 
 export const facebookSignin = () => {
@@ -19,15 +15,8 @@ export const facebookSignin = () => {
   firebase
     .auth()
     .signInWithPopup(provider)
-    .then((result) =>
-      console.log('successfully logged in ', result.user.displayName),
-    )
-    .catch((error) =>
-      console.error(
-        'There was an error when signing in with Facebook: ',
-        error,
-      ),
-    );
+    .then((result) => console.log('successfully logged in ', result.user.displayName))
+    .catch((error) => console.error('There was an error when signing in with Facebook: ', error));
 };
 
 export const twitterSignin = () => {
@@ -35,12 +24,8 @@ export const twitterSignin = () => {
   firebase
     .auth()
     .signInWithPopup(provider)
-    .then((result) =>
-      console.log('successfully logged in ', result.user.displayName),
-    )
-    .catch((error) =>
-      console.error('There was an error when signing in with Twitter: ', error),
-    );
+    .then((result) => console.log('successfully logged in ', result.user.displayName))
+    .catch((error) => console.error('There was an error when signing in with Twitter: ', error));
 };
 
 export const signOut = () => {
@@ -48,39 +33,33 @@ export const signOut = () => {
     .auth()
     .signOut()
     .then(() => console.log('User successfully signed out'))
-    .catch((error) =>
-      console.error('There was an error when signing out: ', error),
-    );
+    .catch((error) => console.error('There was an error when signing out: ', error));
 };
 
 export const emailSignin = (email, password) => {
   firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
-    .then(() =>
-      console.log('User successfully signed in with email and password.'),
-    )
-    .catch((error) =>
-      console.error(
-        'There was an error while signing in with email and password: ',
-        error,
-      ),
-    );
+    .then(() => console.log('User successfully signed in with email and password.'))
+    .catch((error) => console.error('There was an error while signing in with email and password: ', error));
 };
 
 export const createEmailSigninAccount = (email, password) => {
   firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
-    .then(() =>
-      console.log(
-        'User successfully created an account with email and password',
-      ),
-    )
-    .catch((error) =>
-      console.error(
-        'There was an error while creating a new user with email and password: ',
-        error,
-      ),
-    );
+    .then(() => console.log('User successfully created an account with email and password'))
+    .catch((error) => console.error('There was an error while creating a new user with email and password: ', error));
+};
+
+export const anonymousSignin = () => {
+  firebase.auth().onAuthStateChanged((user) => {
+    if (!user) {
+      firebase
+        .auth()
+        .signInAnonymously()
+        .then(() => console.log('User successfully signed in anonymously'))
+        .catch((error) => console.error('There was an error while signing in anonymously: ', error));
+    }
+  });
 };
