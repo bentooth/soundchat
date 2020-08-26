@@ -1,12 +1,13 @@
 import firebase from 'firebase';
 import 'firebase/auth';
 import 'firebase/firestore';
-import { firestoreDb } from './firebaseConfiguration';
+import { firestoreDb, cloudStorage } from './firebaseConfiguration';
 
-export const writeSongToFirestore = (songArtist, songTitle) => {
+export const writeSongToFirestore = (songArtist, songTitle, songFile) => {
   const song = {
     songArtist,
     songTitle,
+    songFileName: songFile.name,
   };
 
   firebase.auth().onAuthStateChanged((user) => {
@@ -15,10 +16,35 @@ export const writeSongToFirestore = (songArtist, songTitle) => {
 
       songsCollection
         .add(song)
-        .then((docRef) => console.log('Song document is: ', docRef.id))
+        .then((docRef) => {
+          console.log('Song document is: ', docRef.id);
+          saveSongFile(docRef.id, songFile);
+        })
         .catch((error) => console.error('There was an error while writing a song to firestore: ', error));
     }
   });
+};
+
+const saveSongFile = (docRefId, songFile) => {
+  const fileRef = cloudStorage.ref(`songs/${docRefId}-${songFile.name}`);
+  const uploadTask = fileRef.put(songFile);
+
+  uploadTask.on(
+    'state_changed',
+
+    function progress(snapshot) {
+      console.log('Byes transferred: ', snapshot.bytesTransferred);
+      console.log('Total: bytes: ', snapshot.totalBytes);
+    },
+
+    function error(error) {
+      console.error('There was an error while saving to Cloud Storage: ', error);
+    },
+
+    function complete() {
+      console.log('File successfully saved to Cloud Storage');
+    },
+  );
 };
 
 export const readSongsFromFirestore = () => {
@@ -98,5 +124,18 @@ export const updateSongInFirebase = (song) => {
         .then(() => console.log('You song was updated successfully', song))
         .catch((error) => console.error('There was an errror while updating your song: ', error));
     }
+  });
+};
+
+export const getAudioFromStorage = (fileName) => {
+  return new Promise((resolve) => {
+    // Get the reference to the file in Cloud Storage
+    const fileRef = cloudStorage.ref(`songs/${fileName}`);
+
+    // Get the URL for the song file in Cloud Storage
+    fileRef
+      .getDownloadURL()
+      .then((url) => resolve(url))
+      .catch((error) => console.error('There was an error while retrieving a file from Cloud Storage', error));
   });
 };

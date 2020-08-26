@@ -16,6 +16,7 @@ import {
   deleteSongFromFirestore,
   getSongFromFirestore,
   updateSongInFirebase,
+  getAudioFromStorage,
 } from '../firebase/firebaseRepository';
 
 initializeSigninButtons();
@@ -52,7 +53,8 @@ if (createTuneForm) {
     event.preventDefault();
     const songArtist = event.target['artist-input'].value;
     const songTitle = event.target['song-title-input'].value;
-    writeSongToFirestore(songArtist, songTitle);
+    const songFile = event.target['song-file'].files[0];
+    writeSongToFirestore(songArtist, songTitle, songFile);
   };
 }
 
@@ -97,4 +99,13 @@ if (editSongForm) {
     };
     updateSongInFirebase(song);
   };
+}
+
+const audioElement = document.getElementById('audio-component');
+if (audioElement) {
+  const searchParams = new URLSearchParams(location.search);
+  const fileName = searchParams.get('fileName');
+  getAudioFromStorage(fileName).then((fileUrl) => {
+    audioElement.setAttribute('src', fileUrl);
+  });
 }
