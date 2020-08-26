@@ -104,8 +104,9 @@ if (editSongForm) {
 const audioElement = document.getElementById('audio-component');
 if (audioElement) {
   const searchParams = new URLSearchParams(location.search);
-  const fileName = searchParams.get('fileName');
-  getAudioFromStorage(fileName).then((fileUrl) => {
+  const fileName = searchParams.get('filename');
+  const userId = searchParams.get('userid');
+  getAudioFromStorage(userId, fileName).then((fileUrl) => {
     audioElement.setAttribute('src', fileUrl);
   });
 }

@@ -18,15 +18,15 @@ export const writeSongToFirestore = (songArtist, songTitle, songFile) => {
         .add(song)
         .then((docRef) => {
           console.log('Song document is: ', docRef.id);
-          saveSongFile(docRef.id, songFile);
+          saveSongFile(user.uid, docRef.id, songFile);
         })
         .catch((error) => console.error('There was an error while writing a song to firestore: ', error));
     }
   });
 };
 
-const saveSongFile = (docRefId, songFile) => {
-  const fileRef = cloudStorage.ref(`songs/${docRefId}-${songFile.name}`);
+const saveSongFile = (userId, docRefId, songFile) => {
+  const fileRef = cloudStorage.ref(`songs/${userId}/${docRefId}-${songFile.name}`);
   const uploadTask = fileRef.put(songFile);
 
   uploadTask.on(
@@ -127,10 +127,10 @@ export const updateSongInFirebase = (song) => {
   });
 };
 
-export const getAudioFromStorage = (fileName) => {
+export const getAudioFromStorage = (userId, fileName) => {
   return new Promise((resolve) => {
     // Get the reference to the file in Cloud Storage
-    const fileRef = cloudStorage.ref(`songs/${fileName}`);
+    const fileRef = cloudStorage.ref(`songs/${userId}/${fileName}`);
 
     // Get the URL for the song file in Cloud Storage
     fileRef

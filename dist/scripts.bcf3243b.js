@@ -54143,7 +54143,7 @@ var writeSongToFirestore = function writeSongToFirestore(songArtist, songTitle, 
 
       songsCollection.add(song).then(function (docRef) {
         console.log('Song document is: ', docRef.id);
-        saveSongFile(docRef.id, songFile);
+        saveSongFile(user.uid, docRef.id, songFile);
       }).catch(function (error) {
         return console.error('There was an error while writing a song to firestore: ', error);
       });
@@ -54153,8 +54153,8 @@ var writeSongToFirestore = function writeSongToFirestore(songArtist, songTitle, 
 
 exports.writeSongToFirestore = writeSongToFirestore;
 
-var saveSongFile = function saveSongFile(docRefId, songFile) {
-  var fileRef = _firebaseConfiguration.cloudStorage.ref("songs/".concat(docRefId, "-").concat(songFile.name));
+var saveSongFile = function saveSongFile(userId, docRefId, songFile) {
+  var fileRef = _firebaseConfiguration.cloudStorage.ref("songs/".concat(userId, "/").concat(docRefId, "-").concat(songFile.name));
 
   var uploadTask = fileRef.put(songFile);
   uploadTask.on('state_changed', function progress(snapshot) {
@@ -54258,10 +54258,10 @@ var updateSongInFirebase = function updateSongInFirebase(song) {
 
 exports.updateSongInFirebase = updateSongInFirebase;
 
-var getAudioFromStorage = function getAudioFromStorage(fileName) {
+var getAudioFromStorage = function getAudioFromStorage(userId, fileName) {
   return new Promise(function (resolve) {
     // Get the reference to the file in Cloud Storage
-    var fileRef = _firebaseConfiguration.cloudStorage.ref("songs/".concat(fileName)); // Get the URL for the song file in Cloud Storage
+    var fileRef = _firebaseConfiguration.cloudStorage.ref("songs/".concat(userId, "/").concat(fileName)); // Get the URL for the song file in Cloud Storage
 
 
     fileRef.getDownloadURL().then(function (url) {
@@ -54374,9 +54374,11 @@ var audioElement = document.getElementById('audio-component');
 if (audioElement) {
   var _searchParams = new URLSearchParams(location.search);
 
-  var fileName = _searchParams.get('fileName');
+  var fileName = _searchParams.get('filename');
 
-  (0, _firebaseRepository.getAudioFromStorage)(fileName).then(function (fileUrl) {
+  var userId = _searchParams.get('userid');
+
+  (0, _firebaseRepository.getAudioFromStorage)(userId, fileName).then(function (fileUrl) {
     audioElement.setAttribute('src', fileUrl);
   });
 }
@@ -54408,7 +54410,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52066" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58852" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
