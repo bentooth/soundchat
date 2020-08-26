@@ -15,17 +15,26 @@
     </a>
     <div>
       <a href="/selectartist.html">Select Artist</a>
-      <a href="/mysongs.html" id="appbar-mysongs-link">My Songs</a>
-      <a href="/addtune.html" id="appbar-addtune-button">Add Tune</a>
-      <a href="#" id="appbar-signout-button">Sign Out</a>
-      <a href="/signin.html" id="appbar-signin-button">Sign In</a>
+      <a id="appbar-mysongs-link" href="/mysongs.html">My Songs</a>
+      <a id="appbar-addtune-button" href="/addtune.html">Add Tune</a>
+      <a id="appbar-signout-button" href="#">Sign Out</a>
+      <a id="appbar-signin-button" href="/signin.html">Sign In</a>
     </div>
   </header>
 
   <!-- Main Body -->
   <section class="center-layout">
-    <h1>Listen</h1>
+    <h1 id="artist-name"></h1>
+    <select id="song-select">
+      <option selected>-- Select song --</option>
+    </select>
     <audio id="audio-component" controls></audio>
+    <h3>Comment</h3>
+    <form id="add-comment-form">
+      <textarea id="comment-text" rows="8"></textarea>
+      <button>Add comment</button>
+    </form>
+    <div id="comments-container"></div>
   </section>
 
   <!-- scripts -->

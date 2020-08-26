@@ -1,4 +1,4 @@
-/* Global Styles*/
+/* Global Styles */
 
 body {
   padding: 100px 20px 0 20px;
@@ -21,10 +21,6 @@ a {
   color: black;
 }
 
-a:hover {
-  text-decoration: underline;
-}
-
 button {
   border: solid transparent 1px;
   border-radius: 10px;
@@ -39,6 +35,10 @@ button:hover {
   border: solid black 1px;
 }
 
+a:hover {
+  text-decoration: underline;
+}
+
 input[type='text'],
 input[type='password'] {
   border: solid 1px black;
@@ -47,7 +47,7 @@ input[type='password'] {
   font-size: 16px;
 }
 
-/* Header Styles */
+/* Header */
 
 header {
   display: flex;
@@ -70,10 +70,10 @@ header a {
   font-size: 18px;
 }
 
-#appbar-sigin-button,
+#appbar-signin-button,
 #appbar-signout-button,
 #appbar-addtune-button,
-#appbar-mysong-link {
+#appbar-mysongs-link {
   display: none;
 }
 
@@ -83,6 +83,19 @@ img {
   width: 500px;
   align-self: center;
 }
+
+/* Select Artist */
+
+#select-artist {
+  display: flex;
+  flex-direction: column;
+}
+
+#select-artist a {
+  padding: 10px 0;
+}
+
+/* Sign in */
 
 #signin-google {
   background-color: rgb(219, 68, 55);
@@ -110,10 +123,34 @@ img {
   padding: 10px 20px;
 }
 
-/* listen */
-
+/* Listen */
 audio {
   width: 100%;
+  margin-bottom: 50px;
+}
+
+select {
+  border: solid 1px black;
+  height: 50px;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+textarea {
+  padding: 10px;
+  font-size: 14px;
+}
+
+.comment-wrapper {
+  background-color: #fbfafa;
+  padding: 10px;
+  margin: 15px 0;
+  border-radius: 10px;
+}
+
+.comment-wrapper p:nth-child(2) {
+  color: grey;
+  font-size: 12px;
 }
 
 
